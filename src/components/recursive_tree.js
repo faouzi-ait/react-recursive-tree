@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { styled } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Box from '@material-ui/core/Box';
+import { styled } from '@material-ui/core/styles';
+
+import '../app.css';
 
 const TreeItem = ({ onSelectCallback, label, isSelected, children }) => {
   const [isOpen, toggleItemOpen] = useState(null);
@@ -12,14 +14,15 @@ const TreeItem = ({ onSelectCallback, label, isSelected, children }) => {
     <div>
       <StyledTreeItem>
         {children.length > 0 && (
-          <Box
-            className="icon-container"
-            onClick={() => toggleItemOpen(!isOpen)}>
-            {isOpen ? <ExpandMoreIcon /> : <ChevronRightIcon />}
+          <Box onClick={() => toggleItemOpen(!isOpen)}>
+            {isOpen ? (
+              <ExpandMoreIcon className="chevron" />
+            ) : (
+              <ChevronRightIcon className="chevron" />
+            )}
           </Box>
         )}
         <StyledLabel
-          className="label"
           onClick={(e) => {
             setSelected(!selected);
             onSelectCallback(e);
@@ -57,7 +60,7 @@ const RecursiveTree = ({ listMeta, onSelectCallback }) => {
         // label={branch.label}
         label={
           <div>
-            <input type="checkbox" /> {branch.label}
+            <input type="checkbox" className="checkbox" /> {branch.label}
           </div>
         }>
         {branch.branches.map((branch) => {
@@ -80,6 +83,7 @@ export default RecursiveTree;
 // styles
 const StyledLabel = styled(Box)({
   height: '24px',
+  fontSize: '12px',
   '&:hover': {
     cursor: 'pointer',
   },
@@ -88,6 +92,7 @@ const StyledTreeItem = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
+  marginTop: '-7px',
 });
 const StyledTreeChildren = styled(Box)({
   paddingLeft: '10px',
