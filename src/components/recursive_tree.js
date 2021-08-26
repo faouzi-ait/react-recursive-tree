@@ -26,7 +26,7 @@ const TreeItem = ({ onSelectCallback, label, isSelected, children }) => {
           }}
           style={{
             marginLeft: `${children.length === 0 ? '24px' : ''}`,
-            background: `${selected ? '#d5d5d5' : ''}`,
+            background: `${selected ? 'yellow' : ''}`,
           }}>
           {label}
         </StyledLabel>
@@ -54,7 +54,12 @@ const RecursiveTree = ({ listMeta, onSelectCallback }) => {
           console.log(branch);
         }}
         isSelected={branch.selected}
-        label={branch.label}>
+        // label={branch.label}
+        label={
+          <div>
+            <input type="checkbox" /> {branch.label}
+          </div>
+        }>
         {branch.branches.map((branch) => {
           return <Fragment key={branch.id}>{createTree(branch)}</Fragment>;
         })}
