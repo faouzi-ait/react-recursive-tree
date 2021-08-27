@@ -7,7 +7,7 @@ import { styled } from '@material-ui/core/styles';
 import '../app.css';
 
 const TreeItem = ({ onSelectCallback, label, isSelected, children }) => {
-  const [isOpen, toggleItemOpen] = useState(null);
+  const [isOpen, toggleItemOpen] = useState(true);
   const [selected, setSelected] = useState(isSelected);
 
   return (
@@ -39,28 +39,20 @@ const TreeItem = ({ onSelectCallback, label, isSelected, children }) => {
   );
 };
 
-const RecursiveTree = ({ listMeta, onSelectCallback }) => {
+const RecursiveTree = ({ listMeta, onSelectCallback, list }) => {
+  // SELECTED ITEMS PASSED HERE 
+  console.log(list);
+
   const createTree = (branch) =>
     branch.branches && (
       <TreeItem
         id={branch.id}
         key={branch.id}
-        onSelectCallback={(e) => {
-          onSelectCallback(branch);
-          // LOGIC TO SELECT CURRENT ITEM AND ALL CHILDREN
-          /*
-            - Check if there children
-            - If yes:
-              - loop through it and change the state to selected/true (pass the value a state??)
-            - If not, only set the state to selected/true to this item
-           */
-          console.log(branch);
-        }}
+        onSelectCallback={(e) => onSelectCallback(branch)}
         isSelected={branch.selected}
-        // label={branch.label}
         label={
           <div>
-            <input type="checkbox" className="checkbox" /> {branch.label}
+            <input type="checkbox" className="checkbox" /* checkbox state TBD here */ /> {branch.label}
           </div>
         }>
         {branch.branches.map((branch) => {
@@ -83,7 +75,7 @@ export default RecursiveTree;
 // styles
 const StyledLabel = styled(Box)({
   height: '24px',
-  fontSize: '12px',
+  fontSize: '13px',
   '&:hover': {
     cursor: 'pointer',
   },
